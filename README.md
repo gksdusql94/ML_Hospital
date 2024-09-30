@@ -53,16 +53,17 @@ We conducted a detailed analysis of the dataset to understand the distribution o
 #### Target Variable Distribution
 The target variable `readmitted` showed an imbalance, with approximately 60% of patients not being readmitted and 40% being readmitted. This imbalance informed the model selection process.
 
-```python
-    import matplotlib.pyplot as plt
-    import seaborn as sns
+```
+python
+import matplotlib.pyplot as plt
+import seaborn as sns
     
-    plt.figure(figsize=(6, 4)) # Visualize the target variable distribution
-    sns.countplot(x='readmitted', data=df)
-    plt.title('Distribution of Readmitted Patients')
-    plt.xlabel('Readmitted')
-    plt.ylabel('Count')
-    plt.show()
+plt.figure(figsize=(6, 4)) # Visualize the target variable distribution
+sns.countplot(x='readmitted', data=df)
+plt.title('Distribution of Readmitted Patients')
+plt.xlabel('Readmitted')
+plt.ylabel('Count')
+plt.show()
 ```
 
 ### 3.🔧 Model Building
