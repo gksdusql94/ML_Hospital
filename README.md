@@ -46,12 +46,11 @@ This project aims to predict whether a patient will be readmitted to the hospita
 ---
 
 ### **2.📊  Exploratory Data Analysis (EDA)**
-    We conducted a detailed analysis of the dataset to understand the distribution of the target variable and to identify correlations between numerical features. Visualizations like bar plots and heatmaps helped in this process.
-    
-    #### Target Variable Distribution
-    
-    The target variable `readmitted` showed an imbalance, with approximately 60% of patients not being readmitted and 40% being readmitted. This imbalance informed the model selection process.
-    
+We conducted a detailed analysis of the dataset to understand the distribution of the target variable and to identify correlations between numerical features. Visualizations like bar plots and heatmaps helped in this process.
+
+#### Target Variable Distribution
+The target variable `readmitted` showed an imbalance, with approximately 60% of patients not being readmitted and 40% being readmitted. This imbalance informed the model selection process.
+
     ```python
     import matplotlib.pyplot as plt
     import seaborn as sns
@@ -64,15 +63,12 @@ This project aims to predict whether a patient will be readmitted to the hospita
     plt.show()
 
 ### 3.🔧 Model Building
-
-        We experimented with multiple machine learning models to determine which performed best on this dataset. These included:
-        
-        - **Decision Tree**: A simple and interpretable model, but prone to overfitting.
-        - **Random Forest**: An ensemble method that improves performance by reducing overfitting.
-        - **Gradient Boosting**: A powerful method that outperformed simpler models.
-        - **XGBoost**: The final selected model, known for its scalability and accuracy.
-        
-        Each model was evaluated using the ROC AUC score to compare their predictive performance.
+We experimented with multiple machine learning models to determine which performed best on this dataset. These included:
+- **Decision Tree**: A simple and interpretable model, but prone to overfitting.
+- **Random Forest**: An ensemble method that improves performance by reducing overfitting.
+- **Gradient Boosting**: A powerful method that outperformed simpler models.
+- **XGBoost**: The final selected model, known for its scalability and accuracy.
+ Each model was evaluated using the ROC AUC score to compare their predictive performance.
         
         ```python
         from sklearn.model_selection import train_test_split
@@ -96,8 +92,7 @@ This project aims to predict whether a patient will be readmitted to the hospita
         print(f'ROC AUC: {roc_auc:.2f}')
 
 ### 📚 4. Text Data Handling with TF-IDF
-
-      The dataset included a text-based field `ai_response`. To incorporate this, we used TF-IDF (Term Frequency-Inverse Document Frequency) to convert the text data into numerical features. Logistic Regression was applied to the text data to predict readmission probabilities.
+The dataset included a text-based field `ai_response`. To incorporate this, we used TF-IDF (Term Frequency-Inverse Document Frequency) to convert the text data into numerical features. Logistic Regression was applied to the text data to predict readmission probabilities.
       
       ```python
       from sklearn.feature_extraction.text import TfidfVectorizer
@@ -116,10 +111,8 @@ This project aims to predict whether a patient will be readmitted to the hospita
       y_pred_text = clf_text.predict_proba(X_test_text)[:, 1]
 
 ### 📈 5. Model Stacking and Final Prediction
-
-        We used model stacking to combine the predictions from both the numerical features and the text data. By integrating the outputs of the Logistic Regression model (based on TF-IDF) with the numerical features, we improved the overall predictive power.
-        
-        The stacked model utilized a Random Forest classifier for the final prediction:
+We used model stacking to combine the predictions from both the numerical features and the text data. By integrating the outputs of the Logistic Regression model (based on TF-IDF) with the numerical features, we improved the overall predictive power.
+The stacked model utilized a Random Forest classifier for the final prediction:
         
         ```python
         import numpy as np
@@ -137,8 +130,7 @@ This project aims to predict whether a patient will be readmitted to the hospita
         y_pred_final = clf2.predict_proba(X_test_combined)[:, 1]
 
 ### 6. 📊  Results and ROC Curve Visualization
-
-      The final model, XGBoost, achieved an ROC AUC score of 0.68 on the test dataset. Below is the ROC Curve, which demonstrates the model's ability to distinguish between positive and negative classes:
+The final model, XGBoost, achieved an ROC AUC score of 0.68 on the test dataset. Below is the ROC Curve, which demonstrates the model's ability to distinguish between positive and negative classes:
       
       ```python
       from sklearn.metrics import roc_curve, auc
@@ -161,8 +153,7 @@ This project aims to predict whether a patient will be readmitted to the hospita
       plt.show()
 
 ### 7. 📉 Correlation Analysis with Heatmap
-
-        To identify relationships between numerical features, we used a heatmap to visualize correlations between them.
+To identify relationships between numerical features, we used a heatmap to visualize correlations between them.
         
         ```python
         import matplotlib.pyplot as plt
@@ -178,4 +169,4 @@ This project aims to predict whether a patient will be readmitted to the hospita
         plt.show()
 
 ### 8. 📝  Conclusion
-      The final model selected was XGBoost, achieving an ROC AUC score of 0.68 on the test data. This result shows a reasonable ability to predict patient readmission, though there is room for improvement. The inclusion of text data via TF-IDF combined with numerical features using model stacking contributed to a more accurate prediction.
+The final model selected was XGBoost, achieving an ROC AUC score of 0.68 on the test data. This result shows a reasonable ability to predict patient readmission, though there is room for improvement. The inclusion of text data via TF-IDF combined with numerical features using model stacking contributed to a more accurate prediction.
