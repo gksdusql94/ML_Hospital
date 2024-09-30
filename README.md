@@ -113,6 +113,7 @@ y_pred = clf.predict_proba(X_test)[:, 1]
 roc_auc = roc_auc_score(y_test, y_pred)
 print(f'ROC AUC: {roc_auc:.2f}')
 ```
+![image](https://github.com/user-attachments/assets/63f49292-a6f5-407b-9782-9a3930932bf0)
 
 ### 📚 4. Text Data Handling with TF-IDF
 The dataset included a text-based field `ai_response`. To incorporate this, we used TF-IDF (Term Frequency-Inverse Document Frequency) to convert the text data into numerical features. Logistic Regression was applied to the text data to predict readmission probabilities.
@@ -182,6 +183,8 @@ plt.title('Receiver Operating Characteristic (ROC) Curve')
 plt.legend(loc="lower right")
 plt.show()
 ```
+
+![image](https://github.com/user-attachments/assets/f509feeb-040f-437a-8265-74fcb8a518a4)
 
 
 
