@@ -63,6 +63,7 @@ plt.show()
 ```
 
 ![image](https://github.com/user-attachments/assets/e718c888-a894-486d-804d-5055f03ee3ff)
+From the heatmap, the value of 0.43 indicates a moderate positive correlation between num_medications and num_procedures
 
 ### **2.📊  Exploratory Data Analysis (EDA)**
 We conducted a detailed analysis of the dataset to understand the distribution of the target variable and to identify correlations between numerical features. Visualizations like bar plots and heatmaps helped in this process.
