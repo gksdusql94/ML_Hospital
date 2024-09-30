@@ -61,4 +61,55 @@ This project aims to predict whether a patient will be readmitted to the hospita
         plt.ylabel('Count')
         plt.show()
 
+## 3. Model Building
+    We experimented with multiple machine learning models to determine which performed best on this dataset, including:
+    - **Decision Tree**: A simple and interpretable model but prone to overfitting.
+    - **Random Forest**: An ensemble method that improves performance by reducing overfitting.
+    - **Gradient Boosting**: A powerful method that outperformed simpler models.
+    - **XGBoost**: The final selected model, known for its scalability and accuracy.
+    Each model was evaluated using the ROC AUC score to compare their predictive performance.
+
+          ```python
+          from sklearn.model_selection import train_test_split
+          from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+          from sklearn.tree import DecisionTreeClassifier
+          from xgboost import XGBClassifier
+          from sklearn.metrics import roc_auc_score
+          
+          # Split the dataset into training and testing sets
+          X = df_numeric_scaled
+          y = df['readmitted'].apply(lambda x: 1 if x else 0)  # Binary target label
+          X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=123)
+          
+          # Initialize models
+          dt = DecisionTreeClassifier(random_state=10)
+          rf = RandomForestClassifier(min_samples_split=90, min_samples_leaf=5, max_depth=10, random_state=10)
+          gb = GradientBoostingClassifier(random_state=10)
+          xgb = XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=10)
+          
+          # Train models
+          dt.fit(X_train, y_train)
+          rf.fit(X_train, y_train)
+          gb.fit(X_train, y_train)
+          xgb.fit(X_train, y_train)
+          
+          # Make predictions
+          y_pred_dt = dt.predict_proba(X_test)[:, 1]
+          y_pred_rf = rf.predict_proba(X_test)[:, 1]
+          y_pred_gb = gb.predict_proba(X_test)[:, 1]
+          y_pred_xgb = xgb.predict_proba(X_test)[:, 1]
+          
+          # Calculate ROC AUC scores
+          roc_auc_dt = roc_auc_score(y_test, y_pred_dt)
+          roc_auc_rf = roc_auc_score(y_test, y_pred_rf)
+          roc_auc_gb = roc_auc_score(y_test, y_pred_gb)
+          roc_auc_xgb = roc_auc_score(y_test, y_pred_xgb)
+          
+          # Print ROC AUC scores
+          print(f'Decision Tree ROC AUC: {roc_auc_dt:.2f}')
+          print(f'Random Forest ROC AUC: {roc_auc_rf:.2f}')
+          print(f'Gradient Boosting ROC AUC: {roc_auc_gb:.2f}')
+          print(f'XGBoost ROC AUC: {roc_auc_xgb:.2f}')
+
+
 
