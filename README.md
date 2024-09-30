@@ -44,7 +44,7 @@ df['medical_specialty'] = le.fit_transform(df['medical_specialty'])
 
 scaler = StandardScaler()
 df_numeric = df.select_dtypes(include=np.number)
-df_numeric_scaled = scaler.fit_transform(df_numeric) '''
+df_numeric_scaled = scaler.fit_transform(df_numeric) ```
 
 ## **2.📊  Exploratory Data Analysis (EDA)**
 We conducted a detailed analysis of the dataset to understand the distribution of the target variable and to identify correlations between numerical features. Visualizations like bar plots and heatmaps helped in this process.
