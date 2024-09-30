@@ -46,7 +46,7 @@ scaler = StandardScaler()
 df_numeric = df.select_dtypes(include=np.number)
 df_numeric_scaled = scaler.fit_transform(df_numeric)
 
-### **2. Exploratory Data Analysis (EDA)**
+### **2.📊  Exploratory Data Analysis (EDA)**
 We conducted a detailed analysis of the dataset to understand the distribution of the target variable and to identify correlations between numerical features. Visualizations like bar plots and heatmaps helped in this process.
 
 #### Target Variable Distribution
@@ -66,7 +66,7 @@ plt.xlabel('Readmitted')
 plt.ylabel('Count')
 plt.show()
 
-### 3. Model Building
+### 3.🔧 Model Building
 
 We experimented with multiple machine learning models to determine which performed best on this dataset. These included:
 
@@ -98,7 +98,7 @@ y_pred = clf.predict_proba(X_test)[:, 1]
 roc_auc = roc_auc_score(y_test, y_pred)
 print(f'ROC AUC: {roc_auc:.2f}')
 
-### 4. Text Data Handling with TF-IDF
+### 📚 4. Text Data Handling with TF-IDF
 
 The dataset included a text-based field `ai_response`. To incorporate this, we used TF-IDF (Term Frequency-Inverse Document Frequency) to convert the text data into numerical features. Logistic Regression was applied to the text data to predict readmission probabilities.
 
@@ -118,7 +118,7 @@ clf_text.fit(X_train_text, y_train)
 X_test_text = tfidf.transform(df_test['ai_response'])
 y_pred_text = clf_text.predict_proba(X_test_text)[:, 1]
 
-### 5. Model Stacking and Final Prediction
+### 📈 5. Model Stacking and Final Prediction
 
 We used model stacking to combine the predictions from both the numerical features and the text data. By integrating the outputs of the Logistic Regression model (based on TF-IDF) with the numerical features, we improved the overall predictive power.
 
@@ -139,7 +139,7 @@ clf2.fit(X_combined, y_train)
 X_test_combined = np.concatenate((X_test_std, y_pred_text.reshape(-1, 1)), axis=1)
 y_pred_final = clf2.predict_proba(X_test_combined)[:, 1]
 
-### 6. Results and ROC Curve Visualization
+### 6. 📊  Results and ROC Curve Visualization
 
 The final model, XGBoost, achieved an ROC AUC score of 0.68 on the test dataset. Below is the ROC Curve, which demonstrates the model's ability to distinguish between positive and negative classes:
 
@@ -163,7 +163,7 @@ plt.title('Receiver Operating Characteristic (ROC) Curve')
 plt.legend(loc="lower right")
 plt.show()
 
-### 7. Correlation Analysis with Heatmap
+### 7. 📉 Correlation Analysis with Heatmap
 
 To identify relationships between numerical features, we used a heatmap to visualize correlations between them.
 
@@ -180,5 +180,5 @@ sns.heatmap(corr_matrix, cmap='RdYlBu', annot=True, fmt=".2f")
 plt.title('Correlation Heatmap of Numerical Features')
 plt.show()
 
-8. Conclusion
+### 8. 📝  Conclusion
 The final model selected was XGBoost, achieving an ROC AUC score of 0.68 on the test data. This result shows a reasonable ability to predict patient readmission, though there is room for improvement. The inclusion of text data via TF-IDF combined with numerical features using model stacking contributed to a more accurate prediction.
