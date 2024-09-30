@@ -17,7 +17,6 @@ This project aims to predict whether a patient will be readmitted to the hospita
 ---
 
 ## 1. Data Preprocessing
-
 Before building the model, we performed the following preprocessing steps:
 
 - Columns with excessive missing values (e.g., `max_glu_serum`) were removed.
@@ -26,7 +25,6 @@ Before building the model, we performed the following preprocessing steps:
 - Binary columns like `change` and `diabetesMed` were mapped to `0` (No) and `1` (Yes).
 
 By handling missing data and encoding categorical variables, the dataset was prepared for machine learning model training.
-
 ```python
 # Data Preprocessing
 import pandas as pd
@@ -57,9 +55,14 @@ scaler = StandardScaler()
 df_numeric = df.select_dtypes(include=np.number)
 df_numeric_scaled = scaler.fit_transform(df_numeric)
 
+# Standardize numerical features
+scaler = StandardScaler()
+df_numeric = df.select_dtypes(include=np.number)
+df_numeric_scaled = scaler.fit_transform(df_numeric)
+
+---
 
 ## 2. Exploratory Data Analysis (EDA)
-
 We conducted a detailed analysis of the dataset to understand the distribution of the target variable and to identify correlations between numerical features. Visualizations like bar plots and heatmaps helped in this process.
 
 ### Target Variable Distribution
@@ -76,4 +79,3 @@ plt.title('Distribution of Readmitted Patients')
 plt.xlabel('Readmitted')
 plt.ylabel('Count')
 plt.show()
-
