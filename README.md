@@ -46,6 +46,23 @@ scaler = StandardScaler()
 df_numeric = df.select_dtypes(include=np.number)
 df_numeric_scaled = scaler.fit_transform(df_numeric)
 ```
+#### Correlation Analysis with Heatmap: To identify relationships between numerical features, we used a heatmap to visualize correlations between them.
+
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Calculate the correlation matrix for numerical features
+corr_matrix = df_numeric.corr()
+
+# Plot the heatmap for correlations
+plt.figure(figsize=(10, 8))
+sns.heatmap(corr_matrix, cmap='RdYlBu', annot=True, fmt=".2f")
+plt.title('Correlation Heatmap of Numerical Features')
+plt.show()
+```
+
+![image](https://github.com/user-attachments/assets/e718c888-a894-486d-804d-5055f03ee3ff)
 
 ### **2.📊  Exploratory Data Analysis (EDA)**
 We conducted a detailed analysis of the dataset to understand the distribution of the target variable and to identify correlations between numerical features. Visualizations like bar plots and heatmaps helped in this process.
@@ -164,22 +181,7 @@ plt.legend(loc="lower right")
 plt.show()
 ```
 
-### 7. 📉 Correlation Analysis with Heatmap
-To identify relationships between numerical features, we used a heatmap to visualize correlations between them.
-        
-```python
-import matplotlib.pyplot as plt
-import seaborn as sns
 
-# Calculate the correlation matrix for numerical features
-corr_matrix = df_numeric.corr()
-
-# Plot the heatmap for correlations
-plt.figure(figsize=(10, 8))
-sns.heatmap(corr_matrix, cmap='RdYlBu', annot=True, fmt=".2f")
-plt.title('Correlation Heatmap of Numerical Features')
-plt.show()
-```
 
 ### 8. 📝  Conclusion
 The final model selected was XGBoost, achieving an ROC AUC score of 0.68 on the test data. This result shows a reasonable ability to predict patient readmission, though there is room for improvement. The inclusion of text data via TF-IDF combined with numerical features using model stacking contributed to a more accurate prediction.
