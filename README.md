@@ -53,8 +53,7 @@ We conducted a detailed analysis of the dataset to understand the distribution o
 #### Target Variable Distribution
 The target variable `readmitted` showed an imbalance, with approximately 60% of patients not being readmitted and 40% being readmitted. This imbalance informed the model selection process.
 
-```
-python
+```python
 import matplotlib.pyplot as plt
 import seaborn as sns
     
