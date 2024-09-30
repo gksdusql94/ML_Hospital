@@ -8,6 +8,7 @@ The goal of this project is to predict whether a patient will be readmitted to t
 ### 1. Data Preprocessing:
 - **Dataset**: The dataset contains 8,000 entries with 40 features, such as discharge disposition, admission source, payer code, medical specialty, number of lab procedures, and AI-generated responses for diagnoses.
 ![image](https://github.com/user-attachments/assets/39bd4086-f5ab-4b72-a645-0fd0d026abb2)
+
 ![image](https://github.com/user-attachments/assets/5731969f-d3d2-4d2f-959d-3281d93be1e8)
 
 - **Missing Values**: Several columns, such as `max_glu_serum`, `payer_code`, and `medical_specialty`, had missing values. Missing values were handled by imputing averages or replacing them with "Unknown" labels where appropriate.
