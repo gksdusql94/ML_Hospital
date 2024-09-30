@@ -50,6 +50,7 @@ This project aims to predict whether a patient will be readmitted to the hospita
 
 ## 2. Exploratory Data Analysis (EDA)
   We conducted a detailed analysis of the dataset to understand the distribution of the target variable and to identify correlations between numerical features. Visualizations like bar plots and heatmaps helped in this process.
+      
       ```python
         import matplotlib.pyplot as plt
         import seaborn as sns
