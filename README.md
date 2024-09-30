@@ -1,66 +1,58 @@
-# Hospital Readmission Prediction Project
+# Project Name: Diabetes Readmission Prediction
 
-## Objective:
-The goal of this project is to predict whether a patient will be readmitted to the hospital based on various clinical and administrative data, including diagnoses, treatments, medications, and textual AI-generated responses summarizing each patient's medical condition.
+## Overview
+This project aims to predict whether a patient will be readmitted to the hospital based on various clinical, demographic, and text-based data. The dataset consists of 8,000 patient records, and the goal is to build a robust machine learning model that can accurately predict the likelihood of hospital readmission.
 
-## Key Steps:
+## Table of Contents
+1. [Data Preprocessing](#data-preprocessing)
+2. [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
+3. [Model Building](#model-building)
+4. [Text Data Handling with TF-IDF](#text-data-handling-with-tf-idf)
+5. [Model Stacking and Final Prediction](#model-stacking-and-final-prediction)
+6. [Results and ROC Curve Visualization](#results-and-roc-curve-visualization)
+7. [Correlation Analysis with Heatmap](#correlation-analysis-with-heatmap)
+8. [Conclusion](#conclusion)
+9. [Future Work](#future-work)
 
-### 1. Data Preprocessing:
-- **Dataset**: The dataset contains 8,000 entries with 40 features, such as discharge disposition, admission source, payer code, medical specialty, number of lab procedures, and AI-generated responses for diagnoses.
-![image](https://github.com/user-attachments/assets/39bd4086-f5ab-4b72-a645-0fd0d026abb2)
+---
 
-![image](https://github.com/user-attachments/assets/5731969f-d3d2-4d2f-959d-3281d93be1e8)
+## 1. Data Preprocessing
 
-- **Missing Values**: Several columns, such as `max_glu_serum`, `payer_code`, and `medical_specialty`, had missing values. Missing values were handled by imputing averages or replacing them with "Unknown" labels where appropriate.
-- **Categorical Encoding**: Categorical features were encoded using OneHotEncoding and LabelEncoding. Binary columns such as `diabetesMed` and `change` were converted to 0 and 1.
+Before building the model, we performed the following preprocessing steps:
 
+- Columns with excessive missing values (e.g., `max_glu_serum`) were removed.
+- Categorical columns were encoded using Label Encoding and One-Hot Encoding.
+- Numerical columns were standardized using `StandardScaler` to normalize the data.
+- Binary columns like `change` and `diabetesMed` were mapped to `0` (No) and `1` (Yes).
 
-### 2. Exploratory Data Analysis (EDA):
-- The distribution of the target variable (`readmitted`) was found to be slightly imbalanced, with about 60% of patients not being readmitted and 40% being readmitted.
-- Summary statistics and correlations were calculated to understand relationships between variables.
+By handling missing data and encoding categorical variables, the dataset was prepared for machine learning model training.
 
-### 3. Feature Engineering:
-- **Text Feature Engineering**: AI-generated diagnostic responses were vectorized using `TfidfVectorizer`, with bigrams and trigrams, and incorporated into the prediction pipeline.
-- **Numerical Feature Scaling**: Numerical features were standardized using `StandardScaler` for better performance in machine learning algorithms.
+```python
+# Data Preprocessing
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 
-### 4. Model Training and Evaluation:
-#### Model 1: Logistic Regression
-- Logistic Regression was trained on the TF-IDF-transformed AI response text data.
-- Cross-validation was used, and the model yielded an AUC score of approximately 0.561.
+# Replace '?' with NaN
+df.replace("?", np.nan, inplace=True)
 
-#### Model 2: Random Forest (for Stacking)
-- A second model was built by combining the standardized numerical data with predicted probabilities from the TF-IDF text data.
-- This Random Forest model yielded an improved AUC score of 0.675.
+# Handle missing values
+df['discharge_disposition_id'].fillna('Unknown', inplace=True)
+df['admission_source_id'].fillna('Not Mapped', inplace=True)
+df['medical_specialty'].fillna('Unknown', inplace=True)
+df['payer_code'].fillna('Unknown', inplace=True)
 
-#### Model 3: Gradient Boosting Classifier
-- The Gradient Boosting model improved performance significantly, reaching an AUC score of 0.671.
+# Remove unnecessary columns
+df.drop(columns=['max_glu_serum'], inplace=True)
 
-#### Model 4: XGBoost
-- XGBoost, an optimized implementation of Gradient Boosting, was the final model chosen. It showed progressive improvement during training, with a final AUC score of 0.6817.
+# Apply Label Encoding and Standardization
+le = LabelEncoder()
+df['discharge_disposition_id'] = le.fit_transform(df['discharge_disposition_id'])
+df['admission_source_id'] = le.fit_transform(df['admission_source_id'])
+df['payer_code'] = le.fit_transform(df['payer_code'])
+df['medical_specialty'] = le.fit_transform(df['medical_specialty'])
 
-### 5. Model Stacking:
-- The results of the logistic regression model on TF-IDF-transformed text data were integrated into a Random Forest classifier through model stacking.
-- This approach combined both structured numerical data and unstructured text data, leading to better performance.
-
-### 6. Final Model Selection:
-- The final model selection was based on XGBoost due to its ability to handle large datasets with high-dimensional features efficiently. Though sensitive to hyperparameter tuning, XGBoost achieved the highest AUC score.
-
-### 7. Test Data Prediction:
-- After preprocessing the test dataset (2,000 samples) in the same manner as the training data, predictions were made using the XGBoost model.
-- The final predicted probabilities were saved to a CSV file for submission.
-
-## Conclusion:
-This project demonstrates the effectiveness of combining structured data with unstructured text data using model stacking. The final model achieved an AUC score of 0.6817, showing promising results for hospital readmission prediction.
-
-Developed a machine learning model to predict hospital readmission likelihood, aiming to improve hospital operational efficiency and patient care management.
-
--	Developed and deployed a machine learning model to predict hospital readmission, achieving an AUC score of 0.68 on the final test dataset.
--	Preprocessed and cleaned a real-world dataset of over 8,000 hospital entries and 40 features (e.g., diagnoses, prescriptions, ER visits).
--	Implemented Logistic Regression and XGBoost models with hyperparameter tuning, increasing predictive performance by ~7% using model stacking with TF-IDF for medical text data. 
-
-## Tools and Libraries:
-- **Programming Language**: Python
-- **Libraries**: Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, XGBoost
-- **Machine Learning Algorithms**: Logistic Regression, Random Forest, Gradient Boosting, XGBoost
-- **Feature Engineering**: OneHotEncoding, LabelEncoding, StandardScaler, TfidfVectorizer
-- **Text Processing**: TF-IDF for feature extraction from diagnostic text.
+# Standardize numerical features
+scaler = StandardScaler()
+df_numeric = df.select_dtypes(include=np.number)
+df_numeric_scaled = scaler.fit_transform(df_numeric)
