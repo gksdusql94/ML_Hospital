@@ -16,46 +16,46 @@
 
 ---
 
-## 1. Data Preprocessing
-Before building the model, we performed the following preprocessing steps:
+### 1. Data Preprocessing
+  Before building the model, we performed the following preprocessing steps:
+  
+  - Columns with excessive missing values (e.g., `max_glu_serum`) were removed.
+  - Categorical columns were encoded using Label Encoding and One-Hot Encoding.
+  - Numerical columns were standardized using `StandardScaler` to normalize the data.
+  - Binary columns like `change` and `diabetesMed` were mapped to `0` (No) and `1` (Yes).
+  
+  By handling missing data and encoding categorical variables, the dataset was prepared for machine learning model training.
+  
+  ```python
+    import pandas as pd
+    import numpy as np
+    from sklearn.preprocessing import LabelEncoder, StandardScaler
+    
+    # Replace '?' with NaN
+    df.replace("?", np.nan, inplace=True)
+    
+    # Handle missing values
+    df['discharge_disposition_id'].fillna('Unknown', inplace=True)
+    df['admission_source_id'].fillna('Not Mapped', inplace=True)
+    df['medical_specialty'].fillna('Unknown', inplace=True)
+    df['payer_code'].fillna('Unknown', inplace=True)
+    
+    # Remove unnecessary columns
+    df.drop(columns=['max_glu_serum'], inplace=True)
+    
+    # Apply Label Encoding and Standardization
+    le = LabelEncoder()
+    df['discharge_disposition_id'] = le.fit_transform(df['discharge_disposition_id'])
+    df['admission_source_id'] = le.fit_transform(df['admission_source_id'])
+    df['payer_code'] = le.fit_transform(df['payer_code'])
+    df['medical_specialty'] = le.fit_transform(df['medical_specialty'])
+    
+    # Standardize numerical features
+    scaler = StandardScaler()
+    df_numeric = df.select_dtypes(include=np.number)
+    df_numeric_scaled = scaler.fit_transform(df_numeric)
 
-- Columns with excessive missing values (e.g., `max_glu_serum`) were removed.
-- Categorical columns were encoded using Label Encoding and One-Hot Encoding.
-- Numerical columns were standardized using `StandardScaler` to normalize the data.
-- Binary columns like `change` and `diabetesMed` were mapped to `0` (No) and `1` (Yes).
-
-By handling missing data and encoding categorical variables, the dataset was prepared for machine learning model training.
-
-```python
-  import pandas as pd
-  import numpy as np
-  from sklearn.preprocessing import LabelEncoder, StandardScaler
-  
-  # Replace '?' with NaN
-  df.replace("?", np.nan, inplace=True)
-  
-  # Handle missing values
-  df['discharge_disposition_id'].fillna('Unknown', inplace=True)
-  df['admission_source_id'].fillna('Not Mapped', inplace=True)
-  df['medical_specialty'].fillna('Unknown', inplace=True)
-  df['payer_code'].fillna('Unknown', inplace=True)
-  
-  # Remove unnecessary columns
-  df.drop(columns=['max_glu_serum'], inplace=True)
-  
-  # Apply Label Encoding and Standardization
-  le = LabelEncoder()
-  df['discharge_disposition_id'] = le.fit_transform(df['discharge_disposition_id'])
-  df['admission_source_id'] = le.fit_transform(df['admission_source_id'])
-  df['payer_code'] = le.fit_transform(df['payer_code'])
-  df['medical_specialty'] = le.fit_transform(df['medical_specialty'])
-  
-  # Standardize numerical features
-  scaler = StandardScaler()
-  df_numeric = df.select_dtypes(include=np.number)
-  df_numeric_scaled = scaler.fit_transform(df_numeric)
-
-## 2. Exploratory Data Analysis (EDA)
+### 2. Exploratory Data Analysis (EDA)
 We conducted a detailed analysis of the dataset to understand the distribution of the target variable and to identify correlations between numerical features. Visualizations like bar plots and heatmaps helped in this process.
 
 Target Variable Distribution
