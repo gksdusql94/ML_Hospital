@@ -3,6 +3,27 @@
 ## **🔍 Overview**
 This project aims to predict whether a patient will be readmitted to the hospital based on various clinical, demographic, and text-based data. The dataset consists of 8,000 patient records, and the goal is to build a robust machine learning model that can accurately predict the likelihood of hospital readmission.
 
+## 📈 Results and Insights
+### Impactful Variables on Readmission Prediction
+- **Medications**: Patients prescribed a higher number of medications exhibited an increased likelihood of readmission.  
+  *Recommendation*: Implement robust medication review and management protocols to mitigate risks.  
+- **Recent Hospitalizations**: Hospitalizations within the past 30 days strongly predicted readmission.  
+  *Recommendation*: Enhance post-discharge follow-up care to monitor high-risk patients.  
+- **Primary Care Engagement**: Patients with fewer appointments with their primary care physicians showed higher readmission rates.  
+  *Recommendation*: Strengthen outpatient engagement and promote routine check-ups.  
+
+### Age-Based Risk Analysis
+- **65+ Patients**: Patients aged 65 and older presented the highest readmission rates. *(ANOVA P-value < 0.01)*  
+  *Recommendation*: Prioritize proactive intervention programs, including discharge planning and geriatric-specific monitoring, for this demographic.  
+
+### Hospitalization Length and Readmission Correlation
+- **Correlation**: A moderate positive correlation *(Pearson coefficient: 0.46)* was found between hospital stay duration and readmission likelihood.  
+  *Recommendation*: Provide personalized care transitions for patients requiring extended hospital stays to minimize risks.  
+
+### Survival Analysis Outcomes
+- **Kaplan-Meier Results**: The average time to readmission was 26.3 days, with 36% of readmissions occurring within the first 30 days post-discharge.  
+  *Recommendation*: Focus early intervention efforts during this critical period to reduce readmission rates and improve patient outcomes.
+
 ## **📋 Table of Contents**
 1. [Data Preprocessing](#1-data-preprocessing)
 2. [Exploratory Data Analysis (EDA)](#2-exploratory-data-analysis-eda)
